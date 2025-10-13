@@ -25,4 +25,3 @@ urlpatterns = [
     path('api/logout', logout, name='logout'),
 ]
 
-

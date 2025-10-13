@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'library',
     'rest_framework.authtoken',
+    'django_filters',
 ]
 #tell django to use your custom user model
 AUTH_USER_MODEL = 'library.User'
