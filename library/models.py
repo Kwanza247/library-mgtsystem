@@ -26,6 +26,10 @@ class Category(models.Model):
     def __str__(self):
         return self.category_name
 
+    class Meta:
+        verbose_name_plural = "Categories"  # ✅ fixes admin name and filter issue
+
+
 
 # Book model
 class Book(models.Model):

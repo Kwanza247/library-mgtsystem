@@ -1,4 +1,5 @@
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, filters
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import Book, Transaction, Category
 from .serializers import (
     UserSerializer,
@@ -16,20 +17,20 @@ from .permissions import IsLibrarian
 
 User = get_user_model()
 
-# ---------------------------
+
 # USER CRUD
-# ---------------------------
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 
-# ---------------------------
-# BOOK VIEWSET
-# ---------------------------
+# BOOK VIEWSET (with search & filter)
 class BookViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_fields = ['category']
+    search_fields = ['title', 'author']
 
     # Only librarians can add, edit, or delete books
     def get_permissions(self):
@@ -40,9 +41,7 @@ class BookViewSet(viewsets.ModelViewSet):
         return [permission() for permission in permission_classes]
 
 
-# ---------------------------
 # TRANSACTION VIEWSET (BORROW/RETURN)
-# ---------------------------
 class TransactionViewSet(viewsets.ModelViewSet):
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
@@ -108,17 +107,14 @@ class TransactionViewSet(viewsets.ModelViewSet):
         )
 
 
-# ---------------------------
 # CATEGORY VIEWSET
-# ---------------------------
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
 
-# ---------------------------
 # AUTHENTICATION VIEWS
-# ---------------------------
+
 @api_view(["POST"])
 @permission_classes([AllowAny])  # anyone can register
 def register(request):
