@@ -110,7 +110,7 @@ Token Authentication
 **Setup Instructions**
 
 Clone this repository
-git clone https://github.com/IbrahimAdegboye/library-mgtsystem.git
+git clone https://github.com/Kwanza247/library-mgtsystem.git
 cd library-mgtsystem
 
 python -m venv .venv
