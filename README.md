@@ -1,6 +1,6 @@
 # 📚 Library Management System API  
 
-This project is a **requirement project for graduation** in the **ALX Backend Engineering program**.  
+This project is a **requirement for graduation** in the **ALX Backend Engineering Program**.  
 It is a **Library Management System API** built with **Django + Django REST Framework (DRF)**.  
 
 The goal is to provide a backend system that allows **librarians** to manage books and users, while **students** can borrow and return books with proper tracking.  
@@ -10,16 +10,16 @@ The goal is to provide a backend system that allows **librarians** to manage boo
 ## 🚀 Features Implemented  
 
 ### 🏗️ Week 1: Project Setup & Models
-- Created **Django project** (`library_api`) and application.
+- Created the **Django project** (`library_api`) and application.
 - Configured **virtual environment** and `requirements.txt`.
 - Designed database models:
-  - **User** → Custom user model with fields: `username`, `email`, `password`, `date_of_membership`, `role` (student/librarian), and `active_status`.
-  - **Book** → `title`, `author`, `ISBN (unique)`, `published_date`, `available_copies`.
+  - **User** → Custom model with `username`, `email`, `password`, `date_of_membership`, `role` (student/librarian), and `active_status`.
+  - **Book** → Fields include `title`, `author`, `ISBN` (unique), `published_date`, and `available_copies`.
   - **Category** → Optional classification for books.
-  - **Transaction** → Connects users with books and records `borrow`/`return` dates.
+  - **Transaction** → Connects users and books; tracks `borrow_date` and `return_date`.
 - Ran initial **migrations** successfully.
-- Registered all models in the **Django Admin Panel**.
-- Verified functionality by creating and managing books in admin.
+- Registered models in the **Django Admin Panel**.
+- Verified basic functionality through the admin interface.
 
 ---
 
@@ -30,13 +30,13 @@ The goal is to provide a backend system that allows **librarians** to manage boo
   - `/api/books/` → Book management  
   - `/api/categories/` → Book categories  
   - `/api/transactions/` → Borrowing records  
-- Configured **DefaultRouter** for automatic route handling.
-- Implemented **authentication system**:
+- Configured `DefaultRouter` for automatic route registration.
+- Added **authentication system**:
   - `POST /api/register/` → Register a new user  
-  - `POST /api/login/` → Login and receive an authentication token  
-  - `POST /api/logout/` → Logout the user  
-- Updated `settings.py` with authentication and permissions.
-- Confirmed API root displays registered endpoints:
+  - `POST /api/login/` → Login and receive authentication token  
+  - `POST /api/logout/` → Logout user  
+- Updated `settings.py` with token and session authentication.
+- Confirmed API Root returns registered endpoints:
   ```json
   {
     "users": "http://127.0.0.1:8000/api/users/",
@@ -45,10 +45,11 @@ The goal is to provide a backend system that allows **librarians** to manage boo
     "categories": "http://127.0.0.1:8000/api/categories/"
   }
 
-🔄 Week 3: Borrow/Return Logic, Permissions & Testing
-✅ Key Updates
+**Week 3: Borrow/Return Logic, Permissions & Testing**
 
-Implemented borrow and return functionality under the TransactionViewSet:
+Key Updates
+
+Implemented borrow and return functionality under TransactionViewSet:
 
 POST /api/transactions/{id}/borrow/ → Borrow a book (students only)
 
@@ -64,23 +65,21 @@ Borrowed books can only be returned once.
 
 Updated permissions:
 
-Librarians: Can add, edit, or delete books.
+Librarians → Can add, edit, or delete books.
 
-Students: Can view and borrow/return books.
+Students → Can view and borrow/return books.
+
+Created custom permission class IsLibrarian for role-based access control.
 
 Improved querysets:
 
 Librarians see all transactions.
 
-Students only see their own transaction history.
+Students only see their own borrowing history.
 
-Added custom permission class IsLibrarian for role-based access control.
+Verified endpoints through DRF’s web interface and Postman.
 
-Verified all endpoints through DRF’s web interface and Postman.
-
-🧪 Testing
-
-Confirmed API actions:
+**Testing & Validation**
 
 Borrowed books reduce available copies.
 
@@ -94,9 +93,9 @@ python manage.py check
 python manage.py runserver
 
 
-✅ No errors were detected.
+ No errors detected.
 
-🧰 Tech Stack
+**Tech Stack**
 
 Python 3.12+
 
@@ -108,35 +107,22 @@ SQLite3 (default database)
 
 Token Authentication
 
-🛠️ Setup Instructions
+**Setup Instructions**
 
-Clone this repository:
-
+Clone this repository
 git clone https://github.com/IbrahimAdegboye/library-mgtsystem.git
-
-
-Navigate into the project:
-
 cd library-mgtsystem
-
-
-Create and activate a virtual environment:
 
 python -m venv .venv
 .venv\Scripts\activate   # Windows
 source .venv/bin/activate  # Mac/Linux
 
-
-Install dependencies:
-
+**Install dependencies**
 pip install -r requirements.txt
 
-
-Run migrations:
-
+**Run migrations**
+Run migrations
 python manage.py migrate
 
-
-Start the server:
-
-python manage.py runserver
+start the development runserver
+**python manage.py runserver**

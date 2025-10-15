@@ -21,7 +21,7 @@ urlpatterns = [
 
     #authentication
     path('api/register/', register, name='register'),
-    path('api/login', login, name='login'),
-    path('api/logout', logout, name='logout'),
+    path('api/login/', login, name='login'),
+    path('api/logout/', logout, name='logout'),
 ]
 
